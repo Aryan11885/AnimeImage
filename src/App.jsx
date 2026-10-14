@@ -6,7 +6,7 @@ function App() {
   const [animes, setAnimes] = useState([])
   const [term, setTerm] = useState("")
   const getAnime = async (name) => {
-     const response = await fetch(`https://api.jikan.moe/v4/anime?q=${name}`)
+     const response = await fetch( `https://api.tenrai.org/v1/anime?q=${encodeURIComponent(name)}`)
      const data = await response.json()
      console.log(data.data)
      setAnimes(data.data)
