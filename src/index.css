@@ -5,65 +5,241 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --border: rgba(255, 255, 255, 0.4);
+  --surface: rgba(255, 255, 255, 0.05);
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
+  margin: 0;
   font-family: "Poppins", sans-serif;
   background: #000;
   color: #bdbdbd;
 }
 
-h1 {
-  margin-top: 50px;
-  text-align: center;
-  font-weight: 100;
+.app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: clamp(16px, 4vw, 40px);
 }
 
-.container {
+h1 {
+  margin: clamp(16px, 5vw, 40px) 0 24px;
+  text-align: center;
+  font-weight: 200;
+  font-size: clamp(1.6rem, 5vw, 2.6rem);
+}
+
+/* ---------- Search ---------- */
+.search {
   display: flex;
   justify-content: center;
-  align-content: center;
-  margin-bottom: 50px;
-  flex-wrap: wrap;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto 24px;
+}
+
+.search-field {
+  position: relative;
+  flex: 1;
+  min-width: 0; /* lets the input shrink on small screens */
 }
 
 input {
-  min-width: 380px;
+  width: 100%;
   color: #fff;
-  background: rgba(255,255,255,.05);
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
-  border-left: 1px solid rgba(255,255,255,.4);
-  border-top: 1px solid rgba(255,255,255,.4);
-  border-bottom: 1px solid rgba(255,255,255,.4);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-right: transparent;
-  padding: 20px;
-  box-sizing: border-box;
+  border-radius: 4px 0 0 4px;
+  padding: 16px 40px 16px 16px;
+  font: inherit;
   outline: 0;
 }
 
+input:focus {
+  border-color: #fff;
+}
+
+input::-webkit-search-cancel-button {
+  display: none;
+}
+
 button {
-  background: rgba(255,255,255,.05);
-  padding: 0 20px;
-  font-weight: 700;
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-  border-right: 1px solid rgba(255,255,255,.4);
-  border-top: 1px solid rgba(255,255,255,.4);
-  border-bottom: 1px solid rgba(255,255,255,.4);
-  border-left: transparent;
-  box-sizing: border-box;
+  font: inherit;
   color: #bdbdbd;
   cursor: pointer;
 }
 
-button:active {
-  color: #fff;
-  background: rgba(255 255 255 / 19%)
+.submit {
+  background: var(--surface);
+  padding: 0 20px;
+  font-weight: 700;
+  border: 1px solid var(--border);
+  border-left: transparent;
+  border-radius: 0 4px 4px 0;
 }
 
-img {
-  margin: 4px;
+.submit:hover,
+.submit:focus-visible {
+  color: #fff;
+}
+
+.submit:active {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.19);
+}
+
+.clear {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: 0;
+  font-size: 1.4rem;
+  line-height: 1;
+  padding: 4px 8px;
+}
+
+.status {
+  text-align: center;
+  font-size: 0.9rem;
+  margin: 0 0 20px;
+}
+
+/* ---------- Grid ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: clamp(12px, 2vw, 24px);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
   border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.08);
+}
+
+.poster {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  background: #111;
+}
+
+.poster img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  display: block;
+}
+
+.no-image {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  font-size: 0.85rem;
+}
+
+.badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #ffd54f;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.info {
+  padding: 10px 12px 14px;
+}
+
+.info h3 {
+  margin: 0 0 4px;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.info p {
+  margin: 0;
+  font-size: 0.75rem;
+}
+
+/* ---------- States ---------- */
+.message {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.message h2 {
+  color: #fff;
+  font-weight: 400;
+}
+
+.message button {
+  margin-top: 8px;
+  padding: 10px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.skeleton {
+  aspect-ratio: 2 / 3;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* ---------- Responsive ---------- */
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  }
+}
+
+@media (max-width: 380px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .submit {
+    padding: 0 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .skeleton {
+    transition: none;
+    animation: none;
+  }
 }
